@@ -1,0 +1,211 @@
+<!DOCTYPE html><html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Travel Application Form</title><style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:20px;
+}
+
+.card{
+
+background:white;
+
+width:100%;
+max-width:700px;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 0 40px rgba(0,0,0,.5);
+
+}
+
+h1{
+
+text-align:center;
+
+color:#d4af37;
+
+font-size:40px;
+
+margin-bottom:30px;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+color:#666;
+
+margin-bottom:25px;
+
+}
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:15px;
+
+border:1px solid #ccc;
+
+border-radius:8px;
+
+font-size:16px;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+background:#d4af37;
+
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+opacity:.9;
+
+}
+
+#result{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:18px;
+
+font-weight:bold;
+
+}
+
+.status-btn{
+
+display:inline-block;
+
+background:#0b1f3a;
+
+color:white;
+
+padding:12px 25px;
+
+border-radius:8px;
+
+text-decoration:none;
+
+margin-top:15px;
+
+}
+
+</style></head><body><div class="card"><h1>Travel Application Form</h1><p class="subtitle">
+Complete your travel application below
+</p><input id="name" placeholder="Full Name"><input id="email" placeholder="Email Address"><input id="job" placeholder="Occupation / Job"><input id="destination" placeholder="Destination Country"><input id="budget" placeholder="Travel Budget"><button onclick="submitApplication()">
+Submit Application
+</button><div id="result"></div></div><script>
+
+async function submitApplication(){
+
+const data = {
+
+name: document.getElementById("name").value,
+
+email: document.getElementById("email").value,
+
+job: document.getElementById("job").value,
+
+destination: document.getElementById("destination").value,
+
+budget: document.getElementById("budget").value
+
+};
+
+const res = await fetch("/apply",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(data)
+
+});
+
+const result = await res.json();
+
+document.getElementById("result").innerHTML = `
+ Application Submitted Successfully
+
+<br><br>
+
+Your Tracking ID:
+
+<br><br>
+
+<b style="font-size:28px;color:#d4af37">
+${result.trackingId}
+</b>
+
+<br><br>
+
+Please save this Tracking ID.
+
+<br><br>
+
+Please wait for admin approval.
+
+<br><br>
+
+<a href="status.html" class="status-btn">
+CHECK STATUS
+</a>
+`;
+
+}
+
+</script></body>
+</html>
